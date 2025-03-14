@@ -2,7 +2,7 @@ name: Publish Python Package to TestPyPI
 
 on:
   release:
-    types: [created]
+    types: [created]  # Запуск при создании нового релиза
 
 jobs:
   build:
@@ -11,6 +11,8 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
+        with:
+          fetch-depth: 0  # Позволяет переключаться между ветками
 
       - name: Set up Python
         uses: actions/setup-python@v4
@@ -45,6 +47,8 @@ jobs:
         run: |
           git config --global user.name "github-actions"
           git config --global user.email "github-actions@github.com"
+          git checkout main  # Переключаемся на основную ветку
+          git pull origin main  # Получаем последние изменения (если есть)
           git add setup.cfg example_pkg/__init__.py
           git commit -m "Update version to $VERSION"
-          git push
+          git push origin main
