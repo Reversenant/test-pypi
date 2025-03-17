@@ -1,44 +1,37 @@
-![Image](./docs/assets/logo_with_text.svg)
+# Overview
 
-<p align="center">
-    <em>Async API connector for PT Sandbox instances</em>
-</p>
+<figure markdown="span">
+    ![Logo](./assets/logo_with_text.svg){ width="700"}
+    <figcaption>Async API connector for PT Sandbox instances</figcaption>
+</figure>
 
----
+## Highlights
 
-**Documentation**: <a href="https://security-experts-community.github.io/py-ptsandbox">https://security-experts-community.github.io/py-ptsandbox</a>
-
-**Source Code**: <a href="https://github.com/Security-Experts-Community/py-ptsandbox">https://github.com/Security-Experts-Community/py-ptsandbox</a>
-
----
+- Fully typed
+- Completely asynchronous
+- Just a modern python
 
 ## Installation
 
-You can use the following command to install the package:
+=== "PyPi"
 
-PyPI:
+    ```sh
+    pip install ptsandbox
+    ```
 
-```sh
-python3 -m pip install ptsandbox
-```
+=== "uv"
 
-uv:
+    ```sh
+    uv add ptsandbox
+    ```
 
-```
-uv add ptsandbox
-```
+=== "nix"
 
-Nix:
+    ```
+    TBA
+    ```
 
-```
-TBA
-```
-
-<p align="middle">
-    <img width="50%" src="./docs/assets/pic_right.svg">
-</p>
-
-## Usage
+## Examples
 
 Getting a list of all installed images using the API:
 
