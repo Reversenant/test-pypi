@@ -44,7 +44,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Install MkDocs
-        run: pip install mkdocs mkdocs-material
+        run: |
+          pip install mkdocs mkdocs-material termynal
 
       - name: Checkout repository
         uses: actions/checkout@v4
