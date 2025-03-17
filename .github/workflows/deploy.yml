@@ -27,7 +27,7 @@ jobs:
           python-version-file: "pyproject.toml"
 
       - name: Install dependencies
-        run: uv pip install twine         
+        run: uv pip install twine --system         
 
       - name: Build Python package
         run: uv build
