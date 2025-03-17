@@ -1,4 +1,4 @@
-name: Publish & Deploy
+name: Publish to PyPI & Deploy to github.io
 
 on:
   push:
@@ -12,26 +12,30 @@ jobs:
   publish:
     runs-on: ubuntu-latest
     steps:
-      - name: "Install build dependencies"
+
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install build dependencies
         run: |
           python -m pip install --upgrade pip
           pip install build twine
           
-      - name: "Install uv"
+      - name: Install uv
         uses: astral-sh/setup-uv@v5          
 
-      - name: "Set up Python"
+      - name: Set up Python
         uses: actions/setup-python@v5
         with:
           python-version-file: "pyproject.toml"
 
-      - name: "Build Python package"
+      - name: Build Python package
         run: python -m build
   
-      - name: "Check package validity"
+      - name: Check package validity
         run: twine check dist/*
 
-      - name: "Publish to TestPyPI"
+      - name: Publish to TestPyPI
         env:
           TEST_PYPI_API_TOKEN: ${{ secrets.TEST_PYPI_API_TOKEN }}
         run: |
@@ -47,21 +51,21 @@ jobs:
       - name: Install MkDocs
         run: pip install mkdocs mkdocs-material
 
-      - name: Checkout
+      - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: "Install uv"
+      - name: Install uv
         uses: astral-sh/setup-uv@v5
 
-      - name: "Set up Python"
+      - name: Set up Python
         uses: actions/setup-python@v5
         with:
           python-version-file: "pyproject.toml"
 
-      - name: "Prepare cache"
+      - name: Prepare cache
         run: echo "cache_id=$(date --utc '+%V')" >> $GITHUB_ENV
 
-      - name: "Cache for mkdocs"
+      - name: Cache for mkdocs
         uses: actions/cache@v3
         with:
           key: mkdocs-material-${{ env.cache_id }}
@@ -69,8 +73,8 @@ jobs:
           restore-keys: |
             mkdocs-material-
 
-      - name: "Sync docs with uv"
+      - name: Sync docs with uv
         run: uv sync --no-group dev --group docs --active
 
-      - name: "Deploy mkdocs to GitHub Pages"
+      - name: Deploy mkdocs to GitHub Pages
         run: mkdocs gh-deploy --config-file ./mkdocs.yml --force
