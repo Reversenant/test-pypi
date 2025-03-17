@@ -1,23 +1,24 @@
-site_name: ptsandbox
-site_url: https://py-ptsandbox.github.io
+site_name: sandbox-cli
+site_description: Documentation of the sandbox-cli project
+
 theme:
   name: material
   language: en
   icon:
     repo: fontawesome/brands/github
-  logo: assets/main_logo_no_text.svg
   favicon: assets/main_logo_no_text.svg
+  logo: assets/main_logo_no_text.svg
   palette:
     - scheme: default
       primary: white
       toggle:
-        name: Dark
         icon: material/toggle-switch
+        name: Dark
     - scheme: slate
       primary: black
       toggle:
-        name: Light
         icon: material/toggle-switch-off
+        name: Light
   features:
     - content.code.copy
     - content.code.annotate
@@ -27,16 +28,19 @@ theme:
     - navigation.sections
     - navigation.top
 
-
 # repo information
-repo_url: https://github.com/Security-Experts-Community/py-ptsandbox
-repo_name: py-ptsandbox
+repo_url: https://github.com/Security-Experts-Community/sandbox-cli
+repo_name: sandbox-cli
 
-# plugins
 plugins:
   - search:
       lang:
         - en
+  - termynal:
+      title: bash
+      buttons: macos
+      prompt_literal_start:
+        - '$'
 
 markdown_extensions:
   - pymdownx.highlight:
@@ -59,25 +63,21 @@ markdown_extensions:
 
 nav:
   - Overview: index.md
-  - Usage:
-    - Proxy: usage/proxy.md
-    - Public API:
-      - Scanning:
-          - Scan: usage/public-api/scanning/scan.md
-          - Rescan: usage/public-api/scanning/rescan.md
-          - Debug Options: usage/public-api/scanning/debug-options.md
-      - Get available images: usage/public-api/image-info.md
-      - Extract email headers: usage/public-api/email.md
-      - Download files: usage/public-api/download-files.md
-      - System info: usage/public-api/system.md
-    - UI API:
-      - Authorization: usage/ui-api/authorization.md
-      - API Tokens: usage/ui-api/api-tokens.md
-      - Antiviruses: usage/ui-api/antiviruses.md
-      - Artifacts: usage/ui-api/artifacts.md
-      - BAqueue: usage/ui-api/baqueue.md
-      - Cluster: usage/ui-api/cluster.md
-      - Components: usage/ui-api/components.md
-      - License: usage/ui-api/license.md
-      - System: usage/ui-api/system.md
-      - Tasks: usage/ui-api/tasks.md
+  - Installation: installing.md
+  - Tutorial:
+    - Getting started: tutorial/getting-started.md
+    - Images: tutorial/images.md
+    - Scans:
+      - Advanced scan: tutorial/scans/scan-new.md
+      - Rescan: tutorial/scans/rescan.md
+      - Scan: tutorial/scans/scan.md
+    - Analyzing logs: tutorial/logs.md
+    - View report: tutorial/report.md
+    - Download files: tutorial/download.md
+    - Analyze emails: tutorial/email.md
+
+  - Configuration: configuration.md
+  - Changelog: changelog.md
+
+extra_css:
+  - css/style.css

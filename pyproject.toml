@@ -1,32 +1,44 @@
 [project]
-name = "ptsandbox-test-1234567"
-version = "5.0.3"
-description = "Async API connector for PT Sandbox instances"
+name = "sandbox-cli"
+version = "0.2.26"
+description = "Command line tool for interaction with sandboxes"
 readme = "README.md"
-requires-python = "<4.0,>=3.11"
-authors = [
-    { name = "None None" },
-    { name = "None None" },
-    { name = "None None" },
-]
-dependencies = [
-    "loguru>=0.7.3",
-    "pydantic>=2.10.5",
-    "aiohttp>=3.11.11",
-    "orjson>=3.10.15",
-    "aiohttp-socks>=0.10.1",
-]
+requires-python = ">=3.11"
 license = "MIT"
-license-files = ["LICENSE"]
-classifiers = [
-    "Programming Language :: Python :: 3",
-    "Operating System :: OS Independent",
+license-files = ["LICENSE", "NOTICE"]
+authors = [{ name = "Alexey Kolesnikov" }]
+dependencies = [
+  "aiofiles>=24.1.0",
+  "asyncssh>=2.19.0",
+  "cryptography>=44.0.0",
+  "cyclopts>=3.9.0",
+  "docker>=7.1.0",
+  "ptsandbox",
+  "pyzipper>=0.3.6",
+  "rich>=13.9.4",
+  "zstandard>=0.23.0",
 ]
-keywords = ["ptsandbox", "sandbox"]
+
+[dependency-groups]
+dev = [
+  "black>=24.10.0",
+  "isort>=5.13.2",
+  "mypy>=1.14.1",
+  "types-aiofiles>=24.1.0.20241221",
+  "types-docker>=7.1.0.20241229",
+]
+docs = ["mkdocs>=1.6.1", "mkdocs-material>=9.6.7", "termynal>=0.13.0"]
+
+[project.scripts]
+sandbox-cli = "sandbox_cli.__main__:main"
 
 # uv settings
 [tool.uv]
 package = true
+
+# TODO: remove after pypi release
+[tool.uv.sources]
+ptsandbox = { path = "../py-ptsandbox", editable = true }
 
 # build system
 [build-system]
@@ -34,9 +46,16 @@ requires = ["hatchling"]
 build-backend = "hatchling.build"
 
 [tool.hatch.build]
-include = ["ptsandbox"]
+include = ["sandbox_cli"]
 
 # tools settings
+[tool.pylint]
+max-line-length = 120
+
+[tool.pyright]
+reportUnknownArgumentType = false
+reportArgumentType = false
+
 [tool.black]
 line-length = 120
 target-version = ['py311']
@@ -58,46 +77,33 @@ exclude = '''
 )
 '''
 
-[tool.mypy]
-plugins = ["pydantic.mypy"]
-strict = true
-follow_imports = "silent"
-
-[tool.pydantic-mypy]
-init_forbid_extra = true
-init_typed = true
-warn_required_dynamic_aliases = true
-
 [[tool.mypy.overrides]]
-module = "ptsandbox.models.core.enum"
-disable_error_code = ["misc", "no-redef"]
-
-[tool.pylint]
-max-line-length = 120
+strict = true
+module = ["ptsandbox.*", "docker.*", "pyzipper.*"]
+ignore_missing_imports = true
 
 [tool.ruff]
 lint.select = [
-    "E",  # pycodestyle errors
-    "W",  # pycodestyle warnings
-    "F",  # pyflakes
-    "I",  # isort
-    "B",  # flake8-bugbear
-    "C4", # flake8-comprehensions
-    "UP", # pyupgrade
+  "E",  # pycodestyle errors
+  "W",  # pycodestyle warnings
+  "F",  # pyflakes
+  "I",  # isort
+  "B",  # flake8-bugbear
+  "C4", # flake8-comprehensions
+  "UP", # pyupgrade
 ]
 lint.ignore = [
-    "E501", # line too long, handled by black
-    "B008", # do not perform function calls in argument defaults
-    "W191", # indentation contains tabs
+  "E501", # line too long, handled by black
+  "B008", # do not perform function calls in argument defaults
+  "W191", # indentation contains tabs
 ]
 line-length = 120
 target-version = "py311"
-format.quote-style = "double"
-format.indent-style = "space"
+
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"
+line-ending = "auto"
 
 [tool.ruff.lint.per-file-ignores]
-"__init__.py" = ["F401", "F403"]
-
-[dependency-groups]
-dev = ["pytest>=8.3.4", "pytest-asyncio>=0.25.2", "mypy>=1.14.1"]
-docs = ["mkdocs>=1.6.1", "mkdocs-material>=9.6.7"]
+"sandbox_cli/cli/*.py" = ["UP007"]
