@@ -18,19 +18,19 @@ jobs:
         with:
           fetch-depth: 0
 
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5
+  
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version: '3.x'
+          python-version-file: "pyproject.toml"
 
       - name: Install dependencies
-        run: |
-          python -m pip install --upgrade pip
-          pip install build
-          pip install twine        
+        run: uv pip install twine         
 
       - name: Build Python package
-        run: python -m build
+        run: uv build
   
       - name: Check package validity
         run: twine check dist/*
@@ -38,18 +38,15 @@ jobs:
       - name: Publish to TestPyPI
         env:
           TEST_PYPI_API_TOKEN: ${{ secrets.TEST_PYPI_API_TOKEN }}
-        run: |
-          python -m pip install --upgrade pip
-          pip install twine
-          twine upload --repository testpypi dist/* \
+        run: twine upload --repository testpypi dist/* \
               --username __token__ \
               --password "$TEST_PYPI_API_TOKEN"
 
   deploy:
     runs-on: ubuntu-latest
     steps:
-      #- name: Install MkDocs
-      #  run: pip install mkdocs mkdocs-material
+      - name: Install MkDocs
+        run: pip install mkdocs mkdocs-material
 
       - name: Checkout repository
         uses: actions/checkout@v4
