@@ -1,6 +1,6 @@
 [project]
 name = "sandbox-cli-test-13141422342"
-version = "0.2.262"
+version = "0.2.2622"
 description = "Command line tool for interaction with sandboxes"
 readme = "README.md"
 requires-python = ">=3.11"
@@ -35,10 +35,6 @@ sandbox-cli = "sandbox_cli.__main__:main"
 # uv settings
 [tool.uv]
 package = true
-
-# TODO: remove after pypi release
-[tool.uv.sources]
-ptsandbox = { path = "../py-ptsandbox", editable = true }
 
 # build system
 [build-system]
