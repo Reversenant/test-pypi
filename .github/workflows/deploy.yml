@@ -57,17 +57,6 @@ jobs:
         with:
           python-version-file: "pyproject.toml"
 
-      - name: Prepare cache
-        run: echo "cache_id=$(date --utc '+%V')" >> $GITHUB_ENV
-
-      - name: Cache for mkdocs
-        uses: actions/cache@v3
-        with:
-          key: mkdocs-material-${{ env.cache_id }}
-          path: .cache
-          restore-keys: |
-            mkdocs-material-
-
       - name: Sync docs with uv
         run: uv sync --no-group dev --group docs --active
 
