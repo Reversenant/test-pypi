@@ -48,8 +48,8 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-      - name: Install MkDocs
-        run: pip install mkdocs mkdocs-material
+      #- name: Install MkDocs
+      #  run: pip install mkdocs mkdocs-material
 
       - name: Checkout repository
         uses: actions/checkout@v4
