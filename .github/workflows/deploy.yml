@@ -48,14 +48,14 @@ jobs:
     needs: build
     steps:
       - name: "Download dist artifact"
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: dist
 
       - name: "Set up Python"
         uses: actions/setup-python@v5
         with:
-          python-version-file: "pyproject.toml"
+          python-version: '3.x'
 
       - name: "Publish to TestPyPI"
         env:
